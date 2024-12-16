@@ -1,0 +1,39 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<head>
+    <script src="{{ url_for('static', filename='js/receipt.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/receipt.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<h1 class="text-center text-danger">HÓA ĐƠN BÁN HÀNG</h1>
+</div>
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Ngày lập đơn</th>
+                <th>Tên khách hàng</th>
+                <th>Thành tiền</th>
+                <th>Đang chờ thanh toán</th>
+                <th>Chi tiết</th>
+            </tr>
+            {% for s in eyyo %}
+            <tr>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>{{ s[2] }}</td>
+                <td>{{ "{:,.0f}".format(s[3]) }} VNĐ</td>
+                {% if s[4] == False %}
+                <td>Đang chờ thanh toán</td>
+                {% else %}
+                <td>Đã thanh toán</td>
+                {% endif %}
+                <td><a href="/receiptdetail/{{s[0]}}">Xem chi tiết</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

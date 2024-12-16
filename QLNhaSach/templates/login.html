@@ -1,0 +1,21 @@
+<link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<body>
+<div class="container-login" id=container>
+    <form method="post">
+        <div class="form-login">
+            <h1>ĐĂNG NHẬP</h1>
+            <input type="text" required id="username" placeholder="Nhập tên đăng nhập" name="username">
+            <input type="password" required id="password" placeholder="Nhập mật khẩu" name="password">
+            <button>Đăng Nhập</button>
+        </div>
+        <div class="form-btn">
+            <div class="btn-signUp">
+                <button><a style="text-decoration: none;" href="/register"> Đăng Ký</a></button>
+                <button><a style="text-decoration: none;" href="/">Trang chủ</a></button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>

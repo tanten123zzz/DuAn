@@ -1,0 +1,29 @@
+<link href="{{ url_for('static', filename='css/register.css') }}" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<body>
+<div class="container-register" id=container>
+    <form method="post" enctype="multipart/form-data" action="/register">
+        <div class="form-login">
+
+            <h1>ĐĂNG KÝ</h1>
+            <input type="text" required id="name" placeholder="Name" name="name">
+            <input type="text" required id="username" placeholder="Nhập tên đăng nhập" name="username">
+            <input type="password" placeholder="password" name="password">
+            <input type="password" required id="confirm" placeholder="Nhập xác nhận mật khẩu" name="confirm">
+            <input type="file" class="form-control" id="avatar" name="avatar">
+            <button>Đăng Ký</button>
+            {% if err_msg %}
+            <div class="alert alert-danger">
+                {{err_msg}}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-btn">
+            <div class="btn-signIn">
+                <button><a style="text-decoration: none;" href="/login"> Đăng Nhập</a></button>
+                <button><a style="text-decoration: none;" href="/">Trang chủ</a></button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>

@@ -1,0 +1,56 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<h1 class="text-center text-danger">HÓA ĐƠN BÁN HÀNG</h1>
+
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <table class="table">
+            <tr>
+                <th>Tên sách</th>
+                <th>Thể loại</th>
+                <th>Tác giả</th>
+                <th>Số lượng tồn</th>
+                <th>Nhập sách</th>
+                <th>Xem chi tiết</th>
+            </tr>
+            {% for p in product %}
+            {% for q in quidinh%}
+            <tr>
+                <td>{{ p[0] }}</td>
+                <td>{{ p[1] }}</td>
+                <td>{{ p[3] }}</td>
+                <td>{{ p[2] }}</td>
+
+                {% if p[2] < q.soluongsach %}
+                <td><a href="javascript:;" onclick="addToProduct({{p[4]}}, '{{p[0]}}', {{p[2]}}, {{p[6]}}, {{p[5]}})">Nhập sách</a></td>
+                <td><a href="/chitietphieunhap">Xem chi tiết</a> </td>
+
+                {% else %}
+                 <td>Đủ số lượng</td>
+                <td></td>
+                {% endif %}
+
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<script>
+    function addToProduct(id, name, soluongton, theloai, tacgia){
+    fetch("/api/chitietphieunhap", {
+        method: "post",
+        body: JSON.stringify({
+            "id": id,
+            "name": name,
+            "soluongton": soluongton,
+            "theloai": theloai,
+            "tacgia": tacgia
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}
+</script>
+{% endblock %}

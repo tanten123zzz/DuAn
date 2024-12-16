@@ -1,0 +1,66 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<head>
+    <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+{% if products %}
+
+<div id="wrapper">
+    <ul class="products">
+        <li>
+            {% for p in products %}
+            <div class="product-item">
+                <div class="product-top">
+                    <a href="#" class="product-thumb">
+                        <img style="width:300px;" src="{{ p.image }}" alt="{{ p.name }}">
+                    </a>
+                    <a href="javascript:;" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}' ,{{p.soluongton}})" class="buy-now">Đặt
+                        hàng</a>
+                </div>
+                <div class="product-info">
+                    <a href="#" class="product-name">{{ p.name }}</a>
+                    <a href="/products/{{p.id}}" class="product-detail">Xem chi tiết</a>
+                    <div class="product-price">{{ "{:,.3f}".format(p.price) }} VNĐ</div>
+                </div>
+            </div>
+            {% endfor %}
+        </li>
+
+    </ul>
+</div>
+
+</div>
+{% else %}
+<p class="text-danger" style="font-size: 5rem;text-align: center;">Không có sản phầm nào!</p>
+{% endif %}
+</div>
+</body>
+<script>
+    function addToCart(id, name, price, img, soluongton){
+    fetch("/api/cart", {
+        method: "post",
+        body: JSON.stringify({
+            "id": id,
+            "name": name,
+            "price": price,
+            "image": img,
+            "soluongton": soluongton
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json()).then(data => {
+        console.info(data)
+        var k = 0;
+        let d = document.getElementsByClassName('cart-counter')
+        for (let i = 0; i < d.length; i++)
+              d[i].innerText = data.total_quantity
+    }) // promise
+}
+</script>
+{% endblock %}

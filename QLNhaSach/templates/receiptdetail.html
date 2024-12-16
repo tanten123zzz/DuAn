@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<h1 class="text-center text-danger">HÓA ĐƠN BÁN HÀNG</h1>
+
+<div class="row" style="font-size: 30px;">
+    <div class="col-md-5 col-sm-12" style="width: 70%;">
+        <table class="table">
+            <tr>
+                <th>Tên Sách</th>
+                <th>Số Lượng</th>
+            </tr>
+            {% for re in receiptdetails %}
+            <tr>
+                <th>{{re.name}}</th>
+                <th>{{re.quantity}}</th>
+            </tr>
+            {% if loop.last and re.active == 0 %}
+            <tr>
+                <th><input type="submit" value="Thanh toán" onclick="update_receipt_detail({{ re.receipt_id }})"></th>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

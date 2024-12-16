@@ -1,0 +1,78 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<form action="#">
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Sách</th>
+                    <th>Số Lượng Tồn Ban Đầu</th>
+                    <th>Nhập Số Lượng</th>
+                </tr>
+                {% for p in session['product'].values() %}
+                    {% for q in quidinh %}
+                    <tr>
+                        <th>{{p.id}}</th>
+                        <th>{{p.name}}</th>
+                        <th>{{p.soluongton}}</th>
+
+                        <th>
+                            <input type="number" value="{{q.soluongtoithieu}}"
+                                   onblur="updateProduct({{ p.id }}, this, {{ q.soluongtoithieu }}, {{ p.soluongton }})"/>
+                        </th>
+                        <th>
+                            <input type="button" value="Xóa" onclick="deleteProduct({{ p.id }})"/>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <input type="button" onclick="LuuPhieuNhap()" value="Lưu Phiếu Nhập"/>
+</form>
+
+<script>
+function updateProduct(productId, obj, soluongtoithieu, soluongton) {
+     if(obj.value < soluongtoithieu){
+            obj.value = soluongtoithieu;
+            alert("Không được nhập bé hơn " + soluongtoithieu);
+      }
+      var tmp = soluongton + parseInt(obj.value);
+      console.log(tmp);
+       fetch(`/chitietphieunhap/${productId}`, {
+            method: "put",
+            body: JSON.stringify({
+                "soluongton": tmp
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+
+}
+
+function deleteProduct(productId) {
+    if (confirm("Bạn chắc chắn xóa không?") == true) {
+        fetch(`/chitietphieunhap/${productId}`, {
+            method: "delete"
+        }).then(res => res.json()).then(data => {
+          location.reload()
+        }).catch(err => console.info(err)) // promise
+    }
+}
+
+function LuuPhieuNhap(){
+    if (confirm("Bạn chắc chắn thanh toán không?") == true) {
+            fetch("/api/save_phieunhap").then(res => res.json()).then(data => {
+                    alert("Lưu thành công");
+                    setTimeout(2000);
+                    window.location = '/admin/sectionproduct';
+            })
+    }
+}
+</script>
+{% endblock %}

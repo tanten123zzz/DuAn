@@ -1,0 +1,22 @@
+[{
+ "id": 1,
+ "name": "Sách Computer Science",
+ "description": "Giáo khoa",
+ "price": 100,
+ "image": "https://m.media-amazon.com/images/I/61fFh20AhQL._AC_UL320_.jpg",
+ "category_id": 1
+}, {
+ "id": 2,
+ "name": "Sách lập trình cơ bản SQL",
+ "description": "Lập trình",
+ "price": 150,
+ "image": "https://m.media-amazon.com/images/I/61IvZ9eG91L._AC_UL320_.jpg",
+ "category_id": 2
+}, {
+ "id": 3,
+ "name": "Sách lập trình cơ bản Go",
+"description": "Lập trình",
+ "price": 800,
+ "image": "https://m.media-amazon.com/images/I/61UcHo8nstL._AC_UL320_.jpg",
+ "category_id": 2
+}]

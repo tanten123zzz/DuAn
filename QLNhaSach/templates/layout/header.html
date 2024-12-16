@@ -1,0 +1,50 @@
+<head>
+    <link href="{{ url_for('static', filename='css/header.css') }}" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+<section class="header">
+     <a class="navbar-brand" style="font-size: 35px; color: orange; font-weight: 550;"  href="/">BÁN HÀNG TRỰC TUYẾN</a>
+    <div>
+        <ul class="navbar">
+            <li><a class="active" href="/">Trang chủ</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Thể loại</a>
+                <ul class="dropdown-menu">
+                    {% for cate in categories %}
+                    <li><a href="/?category_id={{cate.id}}">{{ cate.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <li id="lg-bag">
+                <a href="/cart">
+                    <ion-icon style="font-size: 50px;" name="cart-outline"></ion-icon>
+                    <span class="badge bg-danger cart-counter">{{ cart.total_quantity }}</span>
+                </a>
+            </li>
+            <form class="d-flex" action="/">
+                <input class="form-control me-2" name="keyword" type="text" placeholder="Nhập từ khóa...">
+                <button class="btn btn-primary  " type="submit">Tìm</button>
+            </form>
+            {% if current_user.is_authenticated %}
+            <li>
+                <a href="/">
+                    <img src="{{ current_user.image }}" width="20" class="rounded-circle"
+                         alt="{{ current_user.name }}"/>
+                    {{ current_user.name }}
+                </a>
+            </li>
+            <li>
+                <a href="/logout">Đăng xuất</a>
+            </li>
+            {% else %}
+            <li><a href="/login">Đăng nhập</a></li>
+            <li><a href="/register">Đăng ký</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</section>
+</body>
